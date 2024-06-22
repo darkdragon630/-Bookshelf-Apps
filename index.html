@@ -16,6 +16,17 @@
   <h1 class="head_bar__title">Bookshelf Apps</h1>
 </header>
 <main>
+  <section class="search_section">
+    <h2>Cari Buku (Opsional)</h2>
+    <form id="searchBook">
+      <label for="searchUnfinished">Cari Buku Belum Selesai</label>
+      <input id="searchUnfinished" type="text">
+      <label for="searchFinished">Cari Buku Selesai</label>
+      <input id="searchFinished" type="text">
+      <button id="searchSubmit" type="submit">Cari</button>
+    </form>
+  </section>
+  
   <section class="input_section">
     <h2>Masukkan Buku Baru</h2>
     <form id="inputBook">
@@ -36,17 +47,6 @@
         <input id="isCompleteInput" type="checkbox">
       </div>
       <button id="addBookButton" type="submit">Masukkan Buku ke rak <span>Belum selesai dibaca</span></button>
-    </form>
-  </section>
-  
-  <section class="search_section">
-    <h2>Cari Buku (Opsional)</h2>
-    <form id="searchBook">
-      <label for="searchUnfinished">Cari Buku Belum Selesai</label>
-      <input id="searchUnfinished" type="text">
-      <label for="searchFinished">Cari Buku Selesai</label>
-      <input id="searchFinished" type="text">
-      <button id="searchSubmit" type="submit">Cari</button>
     </form>
   </section>
   
