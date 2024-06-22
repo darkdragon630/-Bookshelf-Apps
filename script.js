@@ -116,21 +116,24 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function searchBooks(event) {
-    event.preventDefault();
-    const searchQuery = searchBookTitle.value.toLowerCase().trim();
-    const searchUnfinished = searchUnfinishedInput.value.toLowerCase().trim();
-    const searchFinished = searchFinishedInput.value.toLowerCase().trim();
+  event.preventDefault();
+  const searchQuery = searchBookTitle.value.toLowerCase().trim();
+  
+  // Check if searchUnfinishedInput and searchFinishedInput are not null
+  const searchUnfinished = searchUnfinishedInput ? searchUnfinishedInput.value.toLowerCase().trim() : '';
+  const searchFinished = searchFinishedInput ? searchFinishedInput.value.toLowerCase().trim() : '';
 
-    const filteredBooks = books.filter(book => {
-      const title = book.title.toLowerCase();
-      const isUnfinishedMatch = !searchUnfinished || (searchUnfinished && !book.isComplete);
-      const isFinishedMatch = !searchFinished || (searchFinished && book.isComplete);
+  const filteredBooks = books.filter(book => {
+    const title = book.title.toLowerCase();
+    const isUnfinishedMatch = !searchUnfinished || (searchUnfinished && !book.isComplete);
+    const isFinishedMatch = !searchFinished || (searchFinished && book.isComplete);
 
-      return title.includes(searchQuery) && isUnfinishedMatch && isFinishedMatch;
-    });
+    return title.includes(searchQuery) && isUnfinishedMatch && isFinishedMatch;
+  });
 
-    renderBooks(filteredBooks);
-  }
+  renderBooks(filteredBooks);
+}
+
 
   addBookButton.addEventListener('click', addBook);
   saveEditButton.addEventListener('click', saveEdit);
