@@ -121,16 +121,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const filteredBooks = books.filter(book => {
       if (searchUnfinished && !book.isComplete) {
-        return book.title.toLowerCase().includes(searchUnfinished) ||
-               book.author.toLowerCase().includes(searchUnfinished) ||
-               book.year.toString().includes(searchUnfinished);
+        return book.title.toLowerCase().includes(searchUnfinished);
       }
       if (searchFinished && book.isComplete) {
-        return book.title.toLowerCase().includes(searchFinished) ||
-               book.author.toLowerCase().includes(searchFinished) ||
-               book.year.toString().includes(searchFinished);
+        return book.title.toLowerCase().includes(searchFinished);
       }
-      return true;
+      return false;
     });
 
     renderBooks(filteredBooks);
