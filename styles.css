@@ -141,20 +141,28 @@ main {
 }
 
 .book_shelf > .book_list > .book_item {
-    padding: 8px 16px 16px 16px;
-    border: 1px solid black;
+    padding: 12px;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    margin: 10px 0;
+    margin-bottom: 10px;
 }
 
-.book_shelf > .book_list > .book_item > h3, p {
+.book_shelf > .book_list > .book_item > h3 {
     margin: 8px 0;
+}
+
+.book_shelf > .book_list > .book_item > p {
+    margin: 8px 0;
+}
+
+.book_shelf > .book_list > .book_item > .action {
+    margin-top: 8px;
 }
 
 .book_shelf > .book_list > .book_item > .action > button {
     border: 0;
-    padding: 5px;
-    margin: 0 5px 0 0;
+    padding: 8px;
+    margin-right: 5px;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -167,6 +175,11 @@ main {
 .book_shelf > .book_list > .book_item > .action > .red {
     background-color: darkred;
     color: white;
+}
+
+/* Hover effects for action buttons */
+.book_shelf > .book_list > .book_item > .action > button:hover {
+    opacity: 0.8;
 }
 
 /* Styles for modal */
