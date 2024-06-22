@@ -1,26 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const addBookButton = document.getElementById('addBookButton');
+  const addBookButton = document.getElementById('bookSubmit');
   const saveEditButton = document.getElementById('saveEditButton');
-  const titleInput = document.getElementById('titleInput');
-  const authorInput = document.getElementById('authorInput');
-  const yearInput = document.getElementById('yearInput');
-  const isCompleteInput = document.getElementById('isCompleteInput');
+  const titleInput = document.getElementById('inputBookTitle');
+  const authorInput = document.getElementById('inputBookAuthor');
+  const yearInput = document.getElementById('inputBookYear');
+  const isCompleteInput = document.getElementById('inputBookIsComplete');
   const editModal = document.getElementById('editModal');
   const editTitleInput = document.getElementById('editTitleInput');
   const editAuthorInput = document.getElementById('editAuthorInput');
   const editYearInput = document.getElementById('editYearInput');
   const editIsCompleteInput = document.getElementById('editIsCompleteInput');
   const searchBookTitle = document.getElementById('searchBookTitle');
-  const searchSubmit = document.getElementById('searchSubmit');
-  const unfinishedBooksList = document.getElementById('unfinishedBooks');
-  const finishedBooksList = document.getElementById('finishedBooks');
+  const searchUnfinishedInput = document.getElementById('searchUnfinished');
+  const searchFinishedInput = document.getElementById('searchFinished');
+  const incompleteBookshelfList = document.getElementById('incompleteBookshelfList');
+  const completeBookshelfList = document.getElementById('completeBookshelfList');
 
   let books = JSON.parse(localStorage.getItem('books')) || [];
   let editingBookId = null;
 
   function renderBooks(filteredBooks = books) {
-    unfinishedBooksList.innerHTML = '';
-    finishedBooksList.innerHTML = '';
+    incompleteBookshelfList.innerHTML = '';
+    completeBookshelfList.innerHTML = '';
 
     filteredBooks.forEach(book => {
       const li = document.createElement('li');
@@ -41,9 +42,9 @@ document.addEventListener('DOMContentLoaded', function() {
       });
 
       if (book.isComplete) {
-        finishedBooksList.appendChild(li);
+        completeBookshelfList.appendChild(li);
       } else {
-        unfinishedBooksList.appendChild(li);
+        incompleteBookshelfList.appendChild(li);
       }
     });
   }
@@ -117,10 +118,13 @@ document.addEventListener('DOMContentLoaded', function() {
   function searchBooks(event) {
     event.preventDefault();
     const searchQuery = searchBookTitle.value.toLowerCase().trim();
+    const searchUnfinished = searchUnfinishedInput.value.toLowerCase().trim();
+    const searchFinished = searchFinishedInput.value.toLowerCase().trim();
+
     const filteredBooks = books.filter(book => {
       const title = book.title.toLowerCase();
-      const isUnfinishedMatch = !searchUnfinishedInput.checked || !book.isComplete;
-      const isFinishedMatch = !searchFinishedInput.checked || book.isComplete;
+      const isUnfinishedMatch = !searchUnfinished || (searchUnfinished && !book.isComplete);
+      const isFinishedMatch = !searchFinished || (searchFinished && book.isComplete);
 
       return title.includes(searchQuery) && isUnfinishedMatch && isFinishedMatch;
     });
