@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const addBookButton = document.getElementById('bookSubmit');
+  const addBookButton = document.getElementById('addBookButton');
   const saveEditButton = document.getElementById('saveEditButton');
-  const titleInput = document.getElementById('inputBookTitle');
-  const authorInput = document.getElementById('inputBookAuthor');
-  const yearInput = document.getElementById('inputBookYear');
-  const isCompleteInput = document.getElementById('inputBookIsComplete');
+  const titleInput = document.getElementById('titleInput');
+  const authorInput = document.getElementById('authorInput');
+  const yearInput = document.getElementById('yearInput');
+  const isCompleteInput = document.getElementById('isCompleteInput');
   const editModal = document.getElementById('editModal');
   const editTitleInput = document.getElementById('editTitleInput');
   const editAuthorInput = document.getElementById('editAuthorInput');
@@ -13,15 +13,15 @@ document.addEventListener('DOMContentLoaded', function() {
   const searchBookTitle = document.getElementById('searchBookTitle');
   const searchUnfinishedInput = document.getElementById('searchUnfinished');
   const searchFinishedInput = document.getElementById('searchFinished');
-  const incompleteBookshelfList = document.getElementById('incompleteBookshelfList');
-  const completeBookshelfList = document.getElementById('completeBookshelfList');
+  const unfinishedBooksList = document.getElementById('unfinishedBooks');
+  const finishedBooksList = document.getElementById('finishedBooks');
 
   let books = JSON.parse(localStorage.getItem('books')) || [];
   let editingBookId = null;
 
   function renderBooks(filteredBooks = books) {
-    incompleteBookshelfList.innerHTML = '';
-    completeBookshelfList.innerHTML = '';
+    unfinishedBooksList.innerHTML = '';
+    finishedBooksList.innerHTML = '';
 
     filteredBooks.forEach(book => {
       const li = document.createElement('li');
@@ -42,9 +42,9 @@ document.addEventListener('DOMContentLoaded', function() {
       });
 
       if (book.isComplete) {
-        completeBookshelfList.appendChild(li);
+        finishedBooksList.appendChild(li);
       } else {
-        incompleteBookshelfList.appendChild(li);
+        unfinishedBooksList.appendChild(li);
       }
     });
   }
