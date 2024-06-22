@@ -1,176 +1,192 @@
-body {
-  font-family: 'Arial', sans-serif;
+* {
+  padding: 0;
   margin: 0;
-  padding: 0;
-  background-color: #f0f0f0;
+  box-sizing: border-box;
 }
 
-.container {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
+body, input, button {
+  font-family: 'Open Sans', sans-serif;
 }
 
-.bookshelf {
-  width: 45%;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.bookshelf h2 {
-  margin-bottom: 10px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid #ccc;
-}
-
-.bookshelf ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.bookshelf ul li {
-  padding: 10px;
-  background-color: #f9f9f9;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.bookshelf ul li strong {
-  font-weight: bold;
+input, button {
   font-size: 16px;
 }
 
-.bookshelf ul li button {
-  margin-left: 10px;
-  padding: 8px;
-  border: none;
-  background-color: #dc3545;
-  color: #fff;
-  cursor: pointer;
-  border-radius: 3px;
+.head_bar {
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: cornflowerblue;
+  color: white;
 }
 
-.bookshelf ul li button:hover {
-  background-color: #c82333;
-}
-
-.search-container {
-  margin-bottom: 10px;
-}
-
-.search-container input[type="text"] {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.add-book {
-  width: 50%;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin: 20px auto;
-}
-
-.add-book input[type="text"],
-.add-book input[type="number"],
-.add-book label {
-  margin-bottom: 10px;
-  display: block;
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.add-book label {
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.add-book button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 5px;
-  display: block;
-  margin-top: 10px;
-}
-
-.add-book button:hover {
-  background-color: #0056b3;
-}
-
-/* Styling for modal */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.5);
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
+main {
+  max-width: 800px;
   width: 80%;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+  padding: 16px;
 }
 
-.modal-content input[type="text"],
-.modal-content input[type="number"],
-.modal-content label {
+.input_section {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+  margin-bottom: 20px;
+}
+
+.input_section > h2 {
+  text-align: center;
+  color: cornflowerblue;
   margin-bottom: 10px;
+}
+
+.input_section > form > .input {
+  margin: 8px 0;
+}
+
+.input_section > form > button {
+  background-color: cornflowerblue;
+  color: white;
+  border: 0;
+  border-radius: 5px;
   display: block;
   width: 100%;
   padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.modal-content label {
-  font-size: 14px;
   cursor: pointer;
-}
-
-.modal-content button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 5px;
-  display: block;
   margin-top: 10px;
+  transition: background-color 0.3s ease;
 }
 
-.modal-content button:hover {
-  background-color: #0056b3;
-}
-
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
+.input_section > form > button > span {
   font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
+.input_section > form > button:hover {
+  background-color: #1e90ff;
+}
+
+.input_section > form > .input > input {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.input_section > form > .input > label {
+  color: cornflowerblue;
+  font-weight: bold;
+}
+
+.input_section > form > .input_inline {
+  margin: 12px 0;
+  display: flex;
+  align-items: center;
+}
+
+.input_section > form > .input_inline > label {
+  color: cornflowerblue;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.search_section {
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+}
+
+.search_section > h2 {
+  color: cornflowerblue;
+  margin-bottom: 10px;
+}
+
+.search_section > form {
+  padding: 16px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr 0.5fr;
+  grid-gap: 10px;
+}
+
+.search_section > form > label {
+  display: flex;
+  align-items: center;
+}
+
+.search_section > form > input {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.search_section > form > button {
+  background-color: cornflowerblue;
+  color: white;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search_section > form > button:hover {
+  background-color: #1e90ff;
+}
+
+.book_shelf {
+  margin: 16px 0 0 0;
+  border: 1px solid black;
+  padding: 16px;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+}
+
+.book_shelf > h2 {
+  color: cornflowerblue;
+  margin-bottom: 10px;
+}
+
+.book_shelf > .book_list {
+  padding: 16px;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.book_shelf > .book_list > .book_item {
+  padding: 8px 16px 16px 16px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.book_shelf > .book_list > .book_item > h3, p {
+  margin: 8px 0;
+}
+
+.book_shelf > .book_list > .book_item > .action > button {
+  border: 0;
+  padding: 5px;
+  margin: 0 5px 0 0;
+  border-radius: 5px;
   cursor: pointer;
 }
+
+.book_shelf > .book_list > .book_item > .action > .green {
+  background-color: darkgreen;
+  color: white;
+}
+
+.book_shelf > .book_list > .book_item > .action > .red {
+  background-color: darkred;
+  color: white;
+}
+
