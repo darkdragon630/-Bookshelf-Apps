@@ -1,19 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const addBookButton = document.getElementById('addBookButton');
+  const addBookButton = document.getElementById('bookSubmit');
   const saveEditButton = document.getElementById('saveEditButton');
-  const titleInput = document.getElementById('titleInput');
-  const authorInput = document.getElementById('authorInput');
-  const yearInput = document.getElementById('yearInput');
-  const isCompleteInput = document.getElementById('isCompleteInput');
+  const titleInput = document.getElementById('inputBookTitle');
+  const authorInput = document.getElementById('inputBookAuthor');
+  const yearInput = document.getElementById('inputBookYear');
+  const isCompleteInput = document.getElementById('inputBookIsComplete');
   const editModal = document.getElementById('editModal');
   const editTitleInput = document.getElementById('editTitleInput');
   const editAuthorInput = document.getElementById('editAuthorInput');
   const editYearInput = document.getElementById('editYearInput');
   const editIsCompleteInput = document.getElementById('editIsCompleteInput');
-  const searchUnfinishedInput = document.getElementById('searchUnfinished');
-  const searchFinishedInput = document.getElementById('searchFinished');
-  const unfinishedBooksList = document.getElementById('unfinishedBooks');
-  const finishedBooksList = document.getElementById('finishedBooks');
+  const searchUnfinishedInput = document.getElementById('searchBookTitle');
+  const searchFinishedInput = document.getElementById('searchBookTitle');
+  const unfinishedBooksList = document.getElementById('incompleteBookshelfList');
+  const finishedBooksList = document.getElementById('completeBookshelfList');
 
   let books = JSON.parse(localStorage.getItem('books')) || [];
   let editingBookId = null;
@@ -116,22 +116,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function searchBooks(event) {
     event.preventDefault();
-    const searchUnfinished = searchUnfinishedInput.value.trim().toLowerCase();
-    const searchFinished = searchFinishedInput.value.trim().toLowerCase();
+    const searchQuery = searchUnfinishedInput.value.trim().toLowerCase();
 
     let filteredBooks = books.filter(book => {
-      if (searchUnfinished && !book.isComplete) {
-        return book.title.toLowerCase().includes(searchUnfinished);
+      if (book.isComplete) {
+        return false;
       }
-      if (searchFinished && book.isComplete) {
-        return book.title.toLowerCase().includes(searchFinished);
-      }
-      return false;
+      return book.title.toLowerCase().includes(searchQuery);
     });
 
-    // Jika tidak ada kriteria pencarian, tampilkan semua buku
-    if (!searchUnfinished && !searchFinished) {
-      filteredBooks = books;
+    if (searchQuery === '') {
+      filteredBooks = books.filter(book => !book.isComplete);
     }
 
     renderBooks(filteredBooks);
