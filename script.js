@@ -29,6 +29,9 @@ document.addEventListener('DOMContentLoaded', function() {
         <strong>${book.title}</strong> (${book.year}) - ${book.author}
         <button class="delete-btn" data-id="${book.id}">Hapus</button>
         <button class="edit-btn" data-id="${book.id}">Edit</button>
+        <button class="move-btn" data-id="${book.id}" data-complete="${book.isComplete ? 'true' : 'false'}">
+          ${book.isComplete ? 'Belum selesai dibaca' : 'Selesai dibaca'}
+        </button>
       `;
 
       const deleteButton = li.querySelector('.delete-btn');
@@ -39,6 +42,11 @@ document.addEventListener('DOMContentLoaded', function() {
       const editButton = li.querySelector('.edit-btn');
       editButton.addEventListener('click', function() {
         openEditModal(book.id);
+      });
+
+      const moveButton = li.querySelector('.move-btn');
+      moveButton.addEventListener('click', function() {
+        moveBook(book.id);
       });
 
       if (book.isComplete) {
@@ -115,25 +123,31 @@ document.addEventListener('DOMContentLoaded', function() {
     editModal.style.display = 'none';
   }
 
+  function moveBook(id) {
+    const index = books.findIndex(book => book.id === id);
+    if (index !== -1) {
+      books[index].isComplete = !books[index].isComplete;
+      localStorage.setItem('books', JSON.stringify(books));
+      renderBooks();
+    }
+  }
+
   function searchBooks(event) {
-  event.preventDefault();
-  const searchQuery = searchBookTitle.value.toLowerCase().trim();
-  
-  // Check if searchUnfinishedInput and searchFinishedInput are not null
-  const searchUnfinished = searchUnfinishedInput ? searchUnfinishedInput.value.toLowerCase().trim() : '';
-  const searchFinished = searchFinishedInput ? searchFinishedInput.value.toLowerCase().trim() : '';
+    event.preventDefault();
+    const searchQuery = searchBookTitle.value.toLowerCase().trim();
+    const searchUnfinished = searchUnfinishedInput.value.toLowerCase().trim();
+    const searchFinished = searchFinishedInput.value.toLowerCase().trim();
 
-  const filteredBooks = books.filter(book => {
-    const title = book.title.toLowerCase();
-    const isUnfinishedMatch = !searchUnfinished || (searchUnfinished && !book.isComplete);
-    const isFinishedMatch = !searchFinished || (searchFinished && book.isComplete);
+    const filteredBooks = books.filter(book => {
+      const title = book.title.toLowerCase();
+      const isUnfinishedMatch = !searchUnfinished || (searchUnfinished && !book.isComplete);
+      const isFinishedMatch = !searchFinished || (searchFinished && book.isComplete);
 
-    return title.includes(searchQuery) && isUnfinishedMatch && isFinishedMatch;
-  });
+      return title.includes(searchQuery) && isUnfinishedMatch && isFinishedMatch;
+    });
 
-  renderBooks(filteredBooks);
-}
-
+    renderBooks(filteredBooks);
+  }
 
   addBookButton.addEventListener('click', addBook);
   saveEditButton.addEventListener('click', saveEdit);
