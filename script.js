@@ -63,4 +63,69 @@ document.addEventListener('DOMContentLoaded', function() {
         isComplete,
       };
 
-      books.push(new
+      books.push(newBook);
+      localStorage.setItem('books', JSON.stringify(books));
+      renderBooks();
+      titleInput.value = '';
+      authorInput.value = '';
+      yearInput.value = '';
+      isCompleteInput.checked = false;
+    }
+  }
+
+  function deleteBook(id) {
+    books = books.filter(book => book.id !== id);
+    localStorage.setItem('books', JSON.stringify(books));
+    renderBooks();
+  }
+
+  function openEditModal(id) {
+    const book = books.find(book => book.id === id);
+    if (book) {
+      editTitleInput.value = book.title;
+      editAuthorInput.value = book.author;
+      editYearInput.value = book.year;
+      editIsCompleteInput.checked = book.isComplete;
+      saveEditButton.setAttribute('data-id', book.id);
+      editModal.style.display = 'block';
+    }
+  }
+
+  function saveEditBook() {
+    const id = parseInt(saveEditButton.getAttribute('data-id'), 10);
+    const title = editTitleInput.value.trim();
+    const author = editAuthorInput.value.trim();
+    const year = parseInt(editYearInput.value.trim(), 10);
+    const isComplete = editIsCompleteInput.checked;
+
+    const bookIndex = books.findIndex(book => book.id === id);
+    if (bookIndex !== -1) {
+      books[bookIndex] = {
+        id,
+        title,
+        author,
+        year,
+        isComplete,
+      };
+      localStorage.setItem('books', JSON.stringify(books));
+      renderBooks();
+      editModal.style.display = 'none';
+    }
+  }
+
+  addBookButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    addBook();
+  });
+
+  saveEditButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    saveEditBook();
+  });
+
+  document.getElementById('closeEditModal').addEventListener('click', function() {
+    editModal.style.display = 'none';
+  });
+
+  renderBooks();
+});
