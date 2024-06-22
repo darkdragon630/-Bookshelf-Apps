@@ -1,19 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const addBookButton = document.getElementById('bookSubmit');
+  const addBookButton = document.getElementById('addBookButton');
   const saveEditButton = document.getElementById('saveEditButton');
-  const titleInput = document.getElementById('inputBookTitle');
-  const authorInput = document.getElementById('inputBookAuthor');
-  const yearInput = document.getElementById('inputBookYear');
-  const isCompleteInput = document.getElementById('inputBookIsComplete');
+  const titleInput = document.getElementById('titleInput');
+  const authorInput = document.getElementById('authorInput');
+  const yearInput = document.getElementById('yearInput');
+  const isCompleteInput = document.getElementById('isCompleteInput');
   const editModal = document.getElementById('editModal');
   const editTitleInput = document.getElementById('editTitleInput');
   const editAuthorInput = document.getElementById('editAuthorInput');
   const editYearInput = document.getElementById('editYearInput');
   const editIsCompleteInput = document.getElementById('editIsCompleteInput');
-  const searchUnfinishedInput = document.getElementById('searchBookTitle');
-  const searchFinishedInput = document.getElementById('searchBookTitle');
-  const unfinishedBooksList = document.getElementById('incompleteBookshelfList');
-  const finishedBooksList = document.getElementById('completeBookshelfList');
+  const searchBookTitle = document.getElementById('searchBookTitle');
+  const searchSubmit = document.getElementById('searchSubmit');
+  const unfinishedBooksList = document.getElementById('unfinishedBooks');
+  const finishedBooksList = document.getElementById('finishedBooks');
 
   let books = JSON.parse(localStorage.getItem('books')) || [];
   let editingBookId = null;
@@ -116,18 +116,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function searchBooks(event) {
     event.preventDefault();
-    const searchQuery = searchUnfinishedInput.value.trim().toLowerCase();
+    const searchQuery = searchBookTitle.value.toLowerCase().trim();
+    const filteredBooks = books.filter(book => {
+      const title = book.title.toLowerCase();
+      const isUnfinishedMatch = !searchUnfinishedInput.checked || !book.isComplete;
+      const isFinishedMatch = !searchFinishedInput.checked || book.isComplete;
 
-    let filteredBooks = books.filter(book => {
-      if (book.isComplete) {
-        return false;
-      }
-      return book.title.toLowerCase().includes(searchQuery);
+      return title.includes(searchQuery) && isUnfinishedMatch && isFinishedMatch;
     });
-
-    if (searchQuery === '') {
-      filteredBooks = books.filter(book => !book.isComplete);
-    }
 
     renderBooks(filteredBooks);
   }
