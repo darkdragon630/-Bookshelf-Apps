@@ -10,10 +10,16 @@
 <div class="container">
   <div class="bookshelf" id="shelf1">
     <h2>Belum selesai dibaca</h2>
+    <div class="search-container">
+      <input type="text" id="searchUnfinished" placeholder="Cari buku...">
+    </div>
     <ul id="unfinishedBooks"></ul>
   </div>
   <div class="bookshelf" id="shelf2">
     <h2>Selesai dibaca</h2>
+    <div class="search-container">
+      <input type="text" id="searchFinished" placeholder="Cari buku...">
+    </div>
     <ul id="finishedBooks"></ul>
   </div>
 </div>
@@ -28,6 +34,23 @@
     Selesai dibaca
   </label>
   <button id="addBookButton">Tambah Buku</button>
+</div>
+
+<!-- Modal untuk mengedit buku -->
+<div id="editModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Edit Buku</h2>
+    <input type="hidden" id="editBookId">
+    <input type="text" id="editTitleInput" placeholder="Judul">
+    <input type="text" id="editAuthorInput" placeholder="Penulis">
+    <input type="number" id="editYearInput" placeholder="Tahun">
+    <label>
+      <input type="checkbox" id="editIsCompleteInput">
+      Selesai dibaca
+    </label>
+    <button id="saveEditButton">Simpan Perubahan</button>
+  </div>
 </div>
 
 <script src="script.js"></script>
