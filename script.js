@@ -16,12 +16,13 @@ document.addEventListener('DOMContentLoaded', function() {
   const finishedBooksList = document.getElementById('finishedBooks');
 
   let books = JSON.parse(localStorage.getItem('books')) || [];
+  let editingBookId = null;
 
-  function renderBooks() {
+  function renderBooks(filteredBooks = books) {
     unfinishedBooksList.innerHTML = '';
     finishedBooksList.innerHTML = '';
 
-    books.forEach(book => {
+    filteredBooks.forEach(book => {
       const li = document.createElement('li');
       li.innerHTML = `
         <strong>${book.title}</strong> (${book.year}) - ${book.author}
@@ -47,7 +48,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  function addBook() {
+  function addBook(event) {
+    event.preventDefault();
     const title = titleInput.value.trim();
     const author = authorInput.value.trim();
     const year = parseInt(yearInput.value.trim(), 10);
@@ -81,51 +83,63 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function openEditModal(id) {
     const book = books.find(book => book.id === id);
-    if (book) {
-      editTitleInput.value = book.title;
-      editAuthorInput.value = book.author;
-      editYearInput.value = book.year;
-      editIsCompleteInput.checked = book.isComplete;
-      saveEditButton.setAttribute('data-id', book.id);
-      editModal.style.display = 'block';
-    }
+    editingBookId = id;
+    editTitleInput.value = book.title;
+    editAuthorInput.value = book.author;
+    editYearInput.value = book.year;
+    editIsCompleteInput.checked = book.isComplete;
+    editModal.style.display = 'block';
   }
 
-  function saveEditBook() {
-    const id = parseInt(saveEditButton.getAttribute('data-id'), 10);
+  function saveEdit(event) {
+    event.preventDefault();
     const title = editTitleInput.value.trim();
     const author = editAuthorInput.value.trim();
     const year = parseInt(editYearInput.value.trim(), 10);
     const isComplete = editIsCompleteInput.checked;
 
-    const bookIndex = books.findIndex(book => book.id === id);
-    if (bookIndex !== -1) {
-      books[bookIndex] = {
-        id,
-        title,
-        author,
-        year,
-        isComplete,
-      };
-      localStorage.setItem('books', JSON.stringify(books));
-      renderBooks();
-      editModal.style.display = 'none';
-    }
+    books = books.map(book => {
+      if (book.id === editingBookId) {
+        return { ...book, title, author, year, isComplete };
+      }
+      return book;
+    });
+
+    localStorage.setItem('books', JSON.stringify(books));
+    renderBooks();
+    editModal.style.display = 'none';
   }
 
-  addBookButton.addEventListener('click', function(event) {
-    event.preventDefault();
-    addBook();
-  });
-
-  saveEditButton.addEventListener('click', function(event) {
-    event.preventDefault();
-    saveEditBook();
-  });
-
-  document.getElementById('closeEditModal').addEventListener('click', function() {
+  function closeEditModal() {
     editModal.style.display = 'none';
-  });
+  }
+
+  function searchBooks(event) {
+    event.preventDefault();
+    const searchUnfinished = searchUnfinishedInput.value.toLowerCase();
+    const searchFinished = searchFinishedInput.value.toLowerCase();
+
+    const filteredBooks = books.filter(book => {
+      if (searchUnfinished && !book.isComplete) {
+        return book.title.toLowerCase().includes(searchUnfinished) ||
+               book.author.toLowerCase().includes(searchUnfinished) ||
+               book.year.toString().includes(searchUnfinished);
+      }
+      if (searchFinished && book.isComplete) {
+        return book.title.toLowerCase().includes(searchFinished) ||
+               book.author.toLowerCase().includes(searchFinished) ||
+               book.year.toString().includes(searchFinished);
+      }
+      return true;
+    });
+
+    renderBooks(filteredBooks);
+  }
+
+  addBookButton.addEventListener('click', addBook);
+  saveEditButton.addEventListener('click', saveEdit);
+  document.getElementById('closeEditModal').addEventListener('click', closeEditModal);
+  document.getElementById('searchBook').addEventListener('submit', searchBooks);
 
   renderBooks();
 });
