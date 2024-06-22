@@ -116,10 +116,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function searchBooks(event) {
     event.preventDefault();
-    const searchUnfinished = searchUnfinishedInput.value.toLowerCase();
-    const searchFinished = searchFinishedInput.value.toLowerCase();
+    const searchUnfinished = searchUnfinishedInput.value.trim().toLowerCase();
+    const searchFinished = searchFinishedInput.value.trim().toLowerCase();
 
-    const filteredBooks = books.filter(book => {
+    let filteredBooks = books.filter(book => {
       if (searchUnfinished && !book.isComplete) {
         return book.title.toLowerCase().includes(searchUnfinished);
       }
@@ -128,6 +128,11 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       return false;
     });
+
+    // Jika tidak ada kriteria pencarian, tampilkan semua buku
+    if (!searchUnfinished && !searchFinished) {
+      filteredBooks = books;
+    }
 
     renderBooks(filteredBooks);
   }
