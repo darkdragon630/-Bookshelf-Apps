@@ -11,8 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const editYearInput = document.getElementById('editYearInput');
   const editIsCompleteInput = document.getElementById('editIsCompleteInput');
   const searchBookTitle = document.getElementById('searchBookTitle');
-  const searchUnfinishedInput = document.getElementById('searchUnfinished');
-  const searchFinishedInput = document.getElementById('searchFinished');
   const unfinishedBooksList = document.getElementById('unfinishedBooks');
   const finishedBooksList = document.getElementById('finishedBooks');
 
@@ -135,15 +133,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function searchBooks(event) {
     event.preventDefault();
     const searchQuery = searchBookTitle.value.toLowerCase().trim();
-    const searchUnfinished = searchUnfinishedInput.checked;
-    const searchFinished = searchFinishedInput.checked;
 
     const filteredBooks = books.filter(book => {
       const title = book.title.toLowerCase();
-      const isUnfinishedMatch = !searchUnfinished || (searchUnfinished && !book.isComplete);
-      const isFinishedMatch = !searchFinished || (searchFinished && book.isComplete);
-
-      return title.includes(searchQuery) && isUnfinishedMatch && isFinishedMatch;
+      return title.includes(searchQuery);
     });
 
     renderBooks(filteredBooks);
