@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
   const addBookButton = document.getElementById('addBookButton');
   const saveEditButton = document.getElementById('saveEditButton');
   const titleInput = document.getElementById('titleInput');
