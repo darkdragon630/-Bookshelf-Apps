@@ -135,8 +135,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function searchBooks(event) {
     event.preventDefault();
     const searchQuery = searchBookTitle.value.toLowerCase().trim();
-    const searchUnfinished = searchUnfinishedInput.value.toLowerCase().trim();
-    const searchFinished = searchFinishedInput.value.toLowerCase().trim();
+    const searchUnfinished = searchUnfinishedInput.checked;
+    const searchFinished = searchFinishedInput.checked;
 
     const filteredBooks = books.filter(book => {
       const title = book.title.toLowerCase();
